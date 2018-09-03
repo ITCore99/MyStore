@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        /*Css Reset Start*/
+        *{
+            margin:0;
+            padding:0;
+        }
+        li{
+            list-style: none;
+            width:100px;
+            height:100px;
+            line-height: 100px;
+            text-align: center;
+            color:#333;
+            background-color: #ccc;
+            float:left;
+        }
+        .clearFix:after
+        {
+             content:"";
+             display: block;
+             height:0px;
+             overflow: hidden;
+             clear: both;
+        }
+        /*Css Reset End*/
+
+        /*样式开始*/
+        .wraper
+        {
+            width:304px;
+            margin-top:100px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom:10px;
+        }
+        .wraper ul
+        {
+            widows: 100%;float:left;
+        }
+        .spacial:hover
+        {
+            background-color:gold;
+            cursor:pointer;
+        }
+        .borderRight
+        {
+            border-right:2px solid #eee; 
+        }
+        .borderTop
+        {
+            border-top:2px solid #eee;
+        }
+        p{
+            width:304px; 
+            height:25px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            line-height: 50px;
+            font-size:20px;
+            color:red;
+            display: none;
+        }
+        /*样式结束*/
+    </style>
+    <script>
+        window.onload=function()
+        {   
+            let n=0; 
+            let timer="";
+            //控制执行多少次的抽奖
+            let radom="";
+            let lis=document.getElementsByTagName("li");
+            lis[0].style.backgroundColor="bisque";
+            let btn=document.getElementById("Btn");
+            let display=document.getElementById("display");
+            btn.onclick=function()
+            {   
+                display.style.display="none";
+                display.innerHTML="恭喜你获得:";
+                radom=Number.parseInt((Math.random()*10+1)*2);
+                timer=window.setInterval(main,100);
+               
+            }
+            function main()
+            {  
+                let mark="";
+                if(n<8)
+                {
+                    clearGreen();
+                    for(let i=0;i<lis.length;i++)
+                    {
+                        if(lis[i].getAttribute("index")==n)
+                        {   
+                            lis[i].style.backgroundColor="bisque";
+                            mark=i;
+                        }
+                    }
+                    n=n+1;
+                    radom--;
+                    if(radom<0)
+                    {
+                        clearInterval(timer);
+                        let str=lis[mark].innerHTML;
+                        display.style.display="block";
+                        display.innerHTML+=str;
+                     }
+                    
+                }else
+                {
+                    n=0;
+                }
+            }
+            function clearGreen()
+            {
+                for(let i=0;i<lis.length;i++)
+                {
+                    if(lis[i].innerHTML=="开始抽奖")
+                    {   
+                        continue;
+                    }
+                    lis[i].style.backgroundColor="#ccc";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="wraper clearFix" >
+      <ul>
+          <li class="normal borderRight" index="0">飞机一架</li>
+          <li class="normal borderRight" index="1">戒指一枚</li>
+          <li class="normal"index="2">水杯一个</li>
+      </ul>
+      <ul>
+          <li class="normal borderTop borderRight"index="7">冰箱一台</li>
+          <li class="spacial borderTop borderRight" id="Btn"index="xx">开始抽奖</li>
+          <li class="normal borderTop"index="3">电脑一台</li>
+      </ul>
+      <ul>
+            <li class="normal borderTop borderRight" index="6">谢谢参与</li>
+            <li class="normal borderRight borderTop"index="5">祝你下次好运</li>
+            <li class="normal borderTop" index="4">坠饰一副</li>
+      </ul>
+    </div>
+        <p id="display">恭喜你获得:</p>
+    
+</body>
+</html>
